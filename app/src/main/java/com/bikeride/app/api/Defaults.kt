@@ -1,13 +1,11 @@
 package com.bikeride.app.api
 
+
 import android.content.Context
-import com.bikeride.app.api.data.Biker
 import com.bikeride.app.utils.Preferences
-import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 
-
-object Biker {
+object Defaults {
 
     fun defaults(context: Context) {
         val preferences: Preferences? = Preferences(context)

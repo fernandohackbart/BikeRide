@@ -4,11 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import com.bikeride.app.utils.Preferences
 import com.github.kittinunf.fuel.Fuel
-import com.bikeride.app.api.Biker as BikerAPI
 import com.bikeride.app.api.data.Biker as BikerData
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.button
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.textView
 import org.jetbrains.anko.verticalLayout
 
@@ -19,7 +15,7 @@ class Biker : Activity() {
         verticalLayout {
             val context = this.context
             textView("Biker")
-            com.bikeride.app.api.Biker.defaults(context)
+            com.bikeride.app.api.Defaults.defaults(context)
             val preferences: Preferences? = Preferences(context)
             Fuel.get("/api/biker/" + preferences!!.bikerID).responseObject(com.bikeride.app.api.data.Biker.Deserializer()) { req, res, result ->
                 val (bikerRsp, err) = result
