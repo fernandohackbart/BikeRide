@@ -17,18 +17,6 @@ object Biker {
                 "bikerideClientID" to preferences!!.clientID,
                 "bikerideClientToken" to preferences!!.clientToken)
     }
-
-
-    fun getBiker(context: Context): Biker? {
-        defaults(context)
-        val preferences: Preferences? = Preferences(context)
-        var bikerReturn: Biker? = null
-        Fuel.get("/api/biker/" + preferences!!.bikerID).responseObject(Biker.Deserializer()) { req, res, result ->
-            val (bikerRsp, err) = result
-            bikerReturn = bikerRsp
-        }
-        return bikerReturn
-    }
 }
 
 
