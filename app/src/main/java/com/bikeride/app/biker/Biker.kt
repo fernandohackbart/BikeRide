@@ -2,8 +2,9 @@ package com.bikeride.app.biker
 
 import android.app.Activity
 import android.os.Bundle
-import com.bikeride.app.api.Defaults
+import com.bikeride.app.api.APIDefaults
 import com.bikeride.app.api.data.BikerChangeFields
+import com.bikeride.app.api.data.BikerID
 import com.bikeride.app.api.data.GeneratePINResponse
 import com.bikeride.app.utils.Preferences
 import com.github.kittinunf.fuel.Fuel
@@ -21,8 +22,11 @@ class Biker : Activity() {
             val gson = GsonBuilder().setPrettyPrinting().create()
             val bikerID = preferences!!.bikerID
             var biker: BikerData? = null
-            textView("Biker")
-            Defaults.defaults(context)
+            APIDefaults.defaults(context)
+
+            textView("Biker") {
+                textSize = 19f
+            }
 
             Fuel.get("/api/biker/"+bikerID).responseObject(BikerData.Deserializer()) { req, res, result ->
             val (bikerRsp, err) = result
@@ -44,7 +48,7 @@ class Biker : Activity() {
                     button("save") {
                         onClick {
                             Fuel.put("/api/biker/"+bikerID+"/name").body(gson.toJson(BikerChangeFields(name=name.text.toString()))).responseObject(GeneratePINResponse.Deserializer()) { req, res, result ->
-                                val (bikerID, err) = result
+                                val (_ , err) = result
                                 if(err!=null)
                                 {
                                     alert(title = "Error",
@@ -66,7 +70,7 @@ class Biker : Activity() {
                     button("save") {
                         onClick {
                             Fuel.put("/api/biker/"+bikerID+"/bloodtype").body(gson.toJson(BikerChangeFields(bloodType= bloodtype.text.toString()))).responseObject(GeneratePINResponse.Deserializer()) { req, res, result ->
-                                val (bikerID, err) = result
+                                val (_ , err) = result
                                 if (err != null) {
                                     alert(title = "Error",
                                             message = err.message.orEmpty()) {
@@ -87,7 +91,7 @@ class Biker : Activity() {
                     button("save") {
                         onClick {
                             Fuel.put("/api/biker/"+bikerID+"/mobile").body(gson.toJson(BikerChangeFields(mobile= mobile.text.toString()))).responseObject(GeneratePINResponse.Deserializer()) { req, res, result ->
-                                val (bikerID, err) = result
+                                val (_ , err) = result
                                 if (err != null) {
                                     alert(title = "Error",
                                             message = err.message.orEmpty()) {
@@ -108,7 +112,7 @@ class Biker : Activity() {
                     button("save") {
                         onClick {
                             Fuel.put("/api/biker/"+bikerID+"/email").body(gson.toJson(BikerChangeFields(email= email.text.toString()))).responseObject(GeneratePINResponse.Deserializer()) { req, res, result ->
-                                val (bikerID, err) = result
+                                val (_ , err) = result
                                 if (err != null) {
                                     alert(title = "Error",
                                             message = err.message.orEmpty()) {
@@ -125,13 +129,40 @@ class Biker : Activity() {
 
                 linearLayout{
                     textView("Active:")
-                    val bikerActive= switch{
-                        biker?.bikerFields?.active
+                    switch{
+                        isChecked = biker!!.bikerFields!!.active.or(false)
 
-
+                        onClick {
+                            if(isChecked){
+                                Fuel.post("/api/biker/"+bikerID+"/activate").responseObject(BikerID.Deserializer()) { req, res, result ->
+                                    val (_ , err) = result
+                                    if (err != null) {
+                                        alert(title = "Error",
+                                                message = err.message.orEmpty()) {
+                                            positiveButton("Close") {
+                                            }
+                                        }.show()
+                                    } else {
+                                        toast("Biker activated")
+                                    }
+                                }
+                            }else{
+                                Fuel.post("/api/biker/"+bikerID+"/deactivate").responseObject(BikerID.Deserializer()) { req, res, result ->
+                                    val (_ , err) = result
+                                    if (err != null) {
+                                        alert(title = "Error",
+                                                message = err.message.orEmpty()) {
+                                            positiveButton("Close") {
+                                            }
+                                        }.show()
+                                    } else {
+                                        toast("Biker deactivated")
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-
             }
         }
     }

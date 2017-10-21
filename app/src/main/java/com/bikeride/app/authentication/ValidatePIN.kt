@@ -2,7 +2,7 @@ package com.bikeride.app.authentication
 
 import android.app.Activity
 import android.os.Bundle
-import com.bikeride.app.api.Defaults
+import com.bikeride.app.api.APIDefaults
 import com.bikeride.app.api.data.*
 import com.bikeride.app.utils.Preferences
 import com.github.kittinunf.fuel.Fuel
@@ -17,9 +17,12 @@ class ValidatePIN : Activity(){
             val preferences: Preferences? = Preferences(context)
             val clientID = preferences!!.clientID
             val gson = GsonBuilder().setPrettyPrinting().create()
-            Defaults.authenticationDefaults(context)
+            APIDefaults.authenticationDefaults(context)
 
-            textView("Validate PIN")
+            textView("Validate PIN") {
+                textSize = 19f
+            }
+
             val pin = editText{
                 hint = "enter your PIN"
             }
@@ -36,7 +39,6 @@ class ValidatePIN : Activity(){
                             }.show()
                         } else {
                             preferences?.clientToken=tokenRsp?.token!!.authToken
-                            preferences?.bikerID=tokenRsp?.bikerID!!.bikerID
                             toast("PIN validated")
                         }
                     }

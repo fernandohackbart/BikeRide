@@ -5,7 +5,7 @@ import android.content.Context
 import com.bikeride.app.utils.Preferences
 import com.github.kittinunf.fuel.core.FuelManager
 
-object Defaults {
+object APIDefaults {
 
     fun authenticationDefaults(context: Context) {
         val preferences: Preferences? = Preferences(context)

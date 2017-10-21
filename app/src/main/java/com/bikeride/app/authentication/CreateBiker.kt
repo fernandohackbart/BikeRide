@@ -2,7 +2,7 @@ package com.bikeride.app.authentication
 
 import android.app.Activity
 import android.os.Bundle
-import com.bikeride.app.api.Defaults
+import com.bikeride.app.api.APIDefaults
 import com.bikeride.app.api.data.*
 import com.bikeride.app.utils.Preferences
 import com.github.kittinunf.fuel.Fuel
@@ -17,10 +17,12 @@ class CreateBiker : Activity() {
         verticalLayout {
             val gson = GsonBuilder().setPrettyPrinting().create()
             val preferences: Preferences? = Preferences(context)
-            Defaults.authenticationDefaults(context)
+            APIDefaults.authenticationDefaults(context)
 
             val clientID = preferences!!.clientID
-            textView("Create biker")
+            textView("Create biker") {
+                textSize = 19f
+            }
             val name = editText{
                 hint = "enter your name"
             }

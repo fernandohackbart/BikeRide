@@ -2,7 +2,7 @@ package com.bikeride.app.authentication
 
 import android.app.Activity
 import android.os.Bundle
-import com.bikeride.app.api.Defaults
+import com.bikeride.app.api.APIDefaults
 import com.bikeride.app.api.data.*
 import com.bikeride.app.utils.Preferences
 import com.github.kittinunf.fuel.Fuel
@@ -17,10 +17,12 @@ class GeneratePIN : Activity(){
         verticalLayout {
             val gson = GsonBuilder().setPrettyPrinting().create()
             val preferences: Preferences? = Preferences(context)
-            Defaults.authenticationDefaults(context)
+            APIDefaults.authenticationDefaults(context)
             val clientID = preferences!!.clientID
 
-            textView("Generate PIN")
+            textView("Generate PIN") {
+                textSize = 19f
+            }
 
             val email = editText{
                 hint = "enter your email"
@@ -36,7 +38,7 @@ class GeneratePIN : Activity(){
                                 }
                             }.show()
                         } else {
-                            println("##### PIN is: ${tokenRsp.toString()} result: ${err}")
+                            println("############### PIN is: ${tokenRsp.toString()} result: ${err}")
                             toast("PIN requested to be received by email, but we are lazy and added to the response: ${tokenRsp.toString()}")
                         }
                     }
@@ -57,7 +59,7 @@ class GeneratePIN : Activity(){
                                 }
                             }.show()
                         } else {
-                            println("##### PIN is: ${tokenRsp.toString()} result: ${err}")
+                            println("############### PIN is: ${tokenRsp.toString()} result: ${err}")
                             toast("PIN requested to be received by SMS, but we are lazy and added to the response: ${tokenRsp.toString()}")
                         }
                     }

@@ -23,7 +23,9 @@ class MainActivity : AppCompatActivity() {
 
                 startActivity(intent)
             }
-            textView("Main activity")
+            textView("Main activity"){
+                textSize = 19f
+            }
             button("Authentication") {
                 onClick { startActivity(authentication) }
             }
