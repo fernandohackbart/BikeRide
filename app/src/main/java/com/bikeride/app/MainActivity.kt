@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
 
         val authentication = Intent(this, Authentication::class.java)
         val biker = Intent(this, Biker::class.java)
-
         verticalLayout {
             preferences = Preferences(this.context)
             if (preferences!!.bikerID=="INVALID"){
@@ -30,6 +29,10 @@ class MainActivity : AppCompatActivity() {
             }
             button("Biker") {
                 onClick { startActivity(biker) }
+            }
+
+            toolbar {
+                lparams (width = matchParent, height = wrapContent)
             }
         }
     }

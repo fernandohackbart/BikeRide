@@ -7,6 +7,12 @@ import com.github.kittinunf.fuel.core.FuelManager
 
 object Defaults {
 
+    fun authenticationDefaults(context: Context) {
+        val preferences: Preferences? = Preferences(context)
+        preferences!!.clientToken
+        FuelManager.instance.basePath = preferences!!.APIURL
+    }
+
     fun defaults(context: Context) {
         val preferences: Preferences? = Preferences(context)
         preferences!!.clientToken

@@ -24,6 +24,8 @@
             android:parentActivityName="com.bikeride.app.MainActivity"/>
         <activity android:name=".authentication.GeneratePIN"
             android:parentActivityName="com.bikeride.app.authentication.Authentication"/>
+        <activity android:name=".authentication.ValidatePIN"
+            android:parentActivityName="com.bikeride.app.authentication.Authentication"/>
         <activity android:name=".authentication.CreateBiker"
             android:parentActivityName="com.bikeride.app.authentication.Authentication"/>
         <activity android:name=".biker.Biker"
